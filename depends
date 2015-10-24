@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/opt/code/venv.depends/bin/python /opt/code/depends/listen.py

@@ -1,9 +1,10 @@
 from scapy.all import *
 import os
 
+WEMO='/opt/code/venv.depends/bin/wemo'
 
 def toggle_switch(switch_name):
-    status = os.popen("venv.depends/bin/wemo status").read()
+    status = os.popen("{} status".format(WEMO)).read()
     switch_status = None
     for line in status.splitlines():
         if switch_name in line:
@@ -15,9 +16,9 @@ def toggle_switch(switch_name):
             print("nope: {}".format(line.strip()))
 
     if switch_status == 'on':
-        os.popen("venv.depends/bin/wemo switch '{}' off".format(switch_name)).read()
+        os.popen("{} switch '{}' off".format(WEMO, switch_name)).read()
     elif switch_status == 'off':
-        os.popen("venv.depends/bin/wemo switch '{}' on".format(switch_name)).read()
+        os.popen("{} switch '{}' on".format(WEMO, switch_name)).read()
     else:
         print("found no status for {}".format(switch_name)) 
 
