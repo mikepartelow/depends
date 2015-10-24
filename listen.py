@@ -8,6 +8,7 @@ import os
 # - document apt-get dependencies for Raspbian
 # - either remove path dependencies or make an installer that alters them
 # - better name for this file
+# - consider making a Raspbian package (.deb?) for apt-get
 
 WEMO='wemo'
 
