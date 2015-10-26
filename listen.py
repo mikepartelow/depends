@@ -12,7 +12,7 @@ import os, sys, json
 
 button_switches = {}
 
-def arp_display(pkt):
+def button_arp(pkt):
     if ARP in pkt and pkt[ARP].op == 1: #who-has (request)
         if pkt[ARP].psrc == '0.0.0.0': # ARP Probe
             mac = pkt[ARP].hwsrc
@@ -42,4 +42,4 @@ for switch_name in env.list_switches():
 # FIXME: log
 print("Sniffing for: {}".format(", ".join(button_switches.keys())))
 
-sniff(prn=arp_display, filter="arp", store=0)
+sniff(prn=button_arp, filter="arp", store=0)

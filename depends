@@ -1,4 +1,8 @@
 #!/bin/sh
 
 . /opt/code/venv.depends/bin/activate
-python /opt/code/depends/listen.py /opt/code/depends/depends.conf
+if [ "$1" = "discover" ]; then
+  python /opt/code/depends/discover.py
+else
+  python /opt/code/depends/listen.py /opt/code/depends/depends.conf
+fi
