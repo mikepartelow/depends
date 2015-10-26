@@ -1,4 +1,4 @@
 #!/bin/sh
 
-. venv.depends/bin/activate
-python listen.py depends.conf
+. /opt/code/venv.depends/bin/activate
+python /opt/code/depends/listen.py /opt/code/depends/depends.conf

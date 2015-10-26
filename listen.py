@@ -3,14 +3,12 @@ from ouimeaux.environment import Environment
 import os, sys, json
 
 # TODO:
-# - read config file
 # - rotated logging
-# - try using wemo APIs
 # - document apt-get dependencies for Raspbian
-# - either remove path dependencies or make an installer that alters them
 # - better name for this file
 # - consider making a Raspbian package (.deb?) for apt-get
 # - discovery tool for creating the conf
+#   - use depends(.sh) as entry point: depends discover; depends listen
 
 button_switches = {}
 
@@ -45,4 +43,3 @@ for switch_name in env.list_switches():
 print("Sniffing for: {}".format(", ".join(button_switches.keys())))
 
 sniff(prn=arp_display, filter="arp", store=0)
-
