@@ -2,6 +2,7 @@
 
 . /opt/code/venv.depends/bin/activate
 if [ "$1" = "discover" ]; then
+  rm -rf ~/.wemo
   python /opt/code/depends/discover.py
 else
   python /opt/code/depends/listen.py /opt/code/depends/depends.conf
