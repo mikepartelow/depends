@@ -19,6 +19,15 @@ email_switches = {}
 with open("/opt/code/depends/gmail-creds") as f:
     GMAIL_USER, GMAIL_PASS = f.readlines()
 
+class Light(object): 
+    def __init__(self, name, bridge):
+        self.name, self.bridge = name, bridge
+        self.light = bridge.Lights[self.name]
+
+    def toggle(self):
+        found_state = self.bridge.light_get_state(self.light).get('state')
+        self.bridge.light_set_state(self.light, state=not found_state)
+
 class Email(object):
     def __init__(self, to_addr):
         self.to_addr = to_addr
@@ -58,7 +67,7 @@ if len(sys.argv) < 2:
 with open(sys.argv[1]) as conf:
     config = json.loads(conf.read())
 
-env = Environment(with_subscribers=False)
+env = Environment(with_subscribers=False, with_cache=False)
 env.start()
 env.discover()
 #env.wait(3)
@@ -67,11 +76,22 @@ found_wemos = False
 
 for switch_name in env.list_switches():
     for entry in config:
-        if switch_name == entry.get('wemo name'):
+        if switch_name == entry.get('wemo switch'):
 	    # FIXME: log
 	    print("Found Wemo: {}".format(switch_name))
 	    button_switches[entry['button mac']] = env.get(switch_name)
             found_wemos = True
+
+for bridge_name in env.list_bridges():
+    bridge = env.get_bridge(bridge_name)
+    for light_name in bridge.bridge_get_lights():
+        for entry in config:
+            if light_name == entry.get('wemo light'):
+                light = Light('Garage North', bridge)
+                # FIXME: log
+	        print("Found Wemo: {}".format(switch_name))
+	        button_switches[entry['button mac']] = light
+                found_wemos = True
 
 for entry in config:
     if entry.get('email to'):
